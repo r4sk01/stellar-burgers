@@ -1,3 +1,3 @@
 export type ProtectedRouteProps = {
-  forAuthorized: boolean;
+  forAuthorized?: boolean;
 };
