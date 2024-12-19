@@ -2,17 +2,12 @@ import { URL } from '@api';
 import { deleteCookie, setCookie } from '../../src/utils/cookie';
 import { selectorList } from '../support/constants/selectors';
 import { url } from '../support/constants/url';
+import { accessToken, refreshToken } from '../support/constants/tokens';
 
 describe('Constructor is Operating Correctly', () => {
   beforeEach(() => {
-    setCookie(
-      'accessToken',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3Mzk3ZDY1YjI3YjA2MDAxYzNlOGE0OCIsImlhdCI6MTczNDU3NDUyMSwiZXhwIjoxNzM0NTc1NzIxfQ.aKlJrvtcM-6LfYkuVf-x_6zSyBiBaH73h5W9lF5ee_0'
-    );
-    localStorage.setItem(
-      'refreshToken',
-      'a03b28b635b0d560b62db5690872a682cbe64bd1dae8c5acb8a83d122823b6bb0a2636b35f36276e'
-    );
+    setCookie('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
     cy.intercept('GET', `${URL}//auth/user`, { fixture: 'user.json' }).as(
       'getUser'
     );
