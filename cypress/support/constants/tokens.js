@@ -1,0 +1,5 @@
+export const accessToken =
+  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3Mzk3ZDY1YjI3YjA2MDAxYzNlOGE0OCIsImlhdCI6MTczNDU3NDUyMSwiZXhwIjoxNzM0NTc1NzIxfQ.aKlJrvtcM-6LfYkuVf-x_6zSyBiBaH73h5W9lF5ee_0';
+
+export const refreshToken =
+  'a03b28b635b0d560b62db5690872a682cbe64bd1dae8c5acb8a83d122823b6bb0a2636b35f36276e';
