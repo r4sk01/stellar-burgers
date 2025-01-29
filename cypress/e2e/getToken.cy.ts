@@ -1,5 +1,5 @@
-describe('Authentication Tests', () => {
-  it('should get tokens', () => {
+describe('Getting Access and Refresh Tokens', () => {
+  it('Getting Tokens', () => {
     cy.request({
       method: 'POST',
       url: `https://norma.nomoreparties.space/api/auth/login`,
@@ -9,8 +9,6 @@ describe('Authentication Tests', () => {
       }
     }).then((response) => {
       const { accessToken, refreshToken } = response.body;
-      console.log('Access Token:', accessToken);
-      console.log('Refresh Token:', refreshToken);
       cy.log('Access Token:', accessToken);
       cy.log('Refresh Token:', refreshToken);
     });

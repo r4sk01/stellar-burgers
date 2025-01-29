@@ -35,3 +35,60 @@
 //     }
 //   }
 // }
+
+// declare namespace Cypress {
+//   interface Chainable<Subject> {
+//     addIngredient(title: string): Chainable<Subject>;
+//   }
+// }
+//
+// Cypress.Commands.add('addIngredient', (type) => {
+//   cy.get(`[data-cy="${type}"]`).children().first().children('button').click();
+// });
+
+// declare namespace Cypress {
+//   interface Chainable<Subject> {
+//     addBun(index: number): Chainable<Subject>;
+//     addIngredient(index: number): Chainable<Subject>;
+//   }
+// }
+//
+// Cypress.Commands.add('addBun', (index) => {
+//   cy.get('[data-cy="Булки"]').children().eq(index).children('button').click();
+// });
+//
+// Cypress.Commands.add('addIngredient', (index) => {
+//   cy.get('[data-cy="Начинки"]').children().eq(index).children('button').click();
+// });
+
+declare namespace Cypress {
+  interface Chainable<Subject> {
+    addBun(name: string): Chainable<Subject>;
+    addIngredient(name: string): Chainable<Subject>;
+    addSauce(name: string): Chainable<Subject>;
+  }
+}
+
+Cypress.Commands.add('addBun', (bunName) => {
+  cy.get('[data-cy="Булки"]')
+    .contains(bunName)
+    .parentsUntil('[data-cy="Булки"]')
+    .find('button')
+    .click();
+});
+
+Cypress.Commands.add('addIngredient', (ingredientName) => {
+  cy.get('[data-cy="Начинки"]')
+    .contains(ingredientName)
+    .parentsUntil('[data-cy="Начинки"]')
+    .find('button')
+    .click();
+});
+
+Cypress.Commands.add('addSauce', (sauceName) => {
+  cy.get('[data-cy="Соусы"]')
+    .contains(sauceName)
+    .parentsUntil('[data-cy="Соусы"]')
+    .find('button')
+    .click();
+});
