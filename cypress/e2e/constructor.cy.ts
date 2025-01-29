@@ -18,7 +18,7 @@ describe('Constructor is Operational', () => {
     );
     cy.intercept('GET', `${URL}/ingredients`, {
       fixture: 'ingredients.json'
-    }).as('getIngredients');
+    });
     cy.visit(url);
     cy.wait('@getUser');
   });
@@ -80,6 +80,29 @@ describe('Constructor is Operational', () => {
       'contain',
       'Соус с шипами Антарианского плоскоходца'
     );
+  });
+
+  it('Open and Close Modal on Overlay Click', () => {
+    // Open Modal
+    cy.get(selectorList.ingredientItem).eq(1).click();
+    cy.get(selectorList.modal).as('modal');
+    cy.get('@modal').should('exist');
+    cy.get('@modal').should('contain', 'Флюоресцентная булка R2-D3');
+    // Close Modal
+    cy.get(selectorList.modalOverlay).click('left', { force: true });
+    cy.get('@modal').should('not.exist');
+  });
+
+  it('Open and Close Modal on Cross Click', () => {
+    // Open Modal
+    cy.get(selectorList.ingredientItem).eq(1).click();
+    cy.get(selectorList.modal).as('modal');
+    cy.get('@modal').should('exist');
+    cy.get('@modal').should('contain', 'Флюоресцентная булка R2-D3');
+
+    // Close Modal
+    cy.get(selectorList.modalCloseBtn).click();
+    cy.get(selectorList.modal).should('not.exist');
   });
 
   after(() => {
