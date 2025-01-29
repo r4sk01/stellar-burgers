@@ -88,7 +88,8 @@ describe('Constructor is Operational', () => {
     cy.get(selectorList.modal).as('modal');
     cy.get('@modal').should('exist');
     cy.get('@modal').should('contain', 'Флюоресцентная булка R2-D3');
-    // Close Modal
+
+    // Close Modal via Overlay
     cy.get(selectorList.modalOverlay).click('left', { force: true });
     cy.get('@modal').should('not.exist');
   });
@@ -100,9 +101,77 @@ describe('Constructor is Operational', () => {
     cy.get('@modal').should('exist');
     cy.get('@modal').should('contain', 'Флюоресцентная булка R2-D3');
 
-    // Close Modal
+    // Close Modal via X Btn
     cy.get(selectorList.modalCloseBtn).click();
-    cy.get(selectorList.modal).should('not.exist');
+    cy.get('@modal').should('not.exist');
+  });
+
+  it('Create Order', () => {
+    cy.get(selectorList.constructor).as('constructor');
+    cy.intercept('POST', `${URL}/orders`, { fixture: 'order.json' }).as(
+      'orderAPI'
+    );
+
+    cy.addBun('Флюоресцентная булка R2-D3');
+    cy.addIngredient('Мясо бессмертных моллюсков Protostomia');
+    cy.addIngredient('Хрустящие минеральные кольца');
+    cy.addIngredient('Сыр с астероидной плесенью');
+    cy.addIngredient('Говяжий метеорит (отбивная)');
+    cy.addIngredient('Мини-салат Экзо-Плантаго');
+    cy.addIngredient('Сыр с астероидной плесенью');
+    cy.addSauce('Соус фирменный Space Sauce');
+
+    cy.get('@constructor').children('div').children('button').click();
+
+    cy.wait('@orderAPI').then((interception) => {
+      // Test Request
+      expect(interception.request.method).to.equal('POST');
+      expect(interception.request.body).to.have.property('ingredients');
+      expect(interception.request.body.ingredients).to.include.members([
+        '643d69a5c3f7b9001cfa093d',
+        '643d69a5c3f7b9001cfa093f',
+        '643d69a5c3f7b9001cfa0946',
+        '643d69a5c3f7b9001cfa094a',
+        '643d69a5c3f7b9001cfa0940',
+        '643d69a5c3f7b9001cfa0949',
+        '643d69a5c3f7b9001cfa094a',
+        '643d69a5c3f7b9001cfa0943'
+      ]);
+
+      // Test Response
+      expect(interception.response).to.not.be.undefined;
+      expect(interception.response!.statusCode).to.equal(200);
+      expect(interception.response!.body).to.have.property('order');
+      expect(interception.response!.body.order).to.have.property(
+        'number',
+        67010
+      );
+      expect(interception.response!.body.order).to.have.property(
+        'price',
+        19377
+      );
+    });
+
+    cy.get(selectorList.modal).as('modal');
+    cy.get('@modal').should('exist');
+    cy.get('@modal').should('contain', '67010');
+    cy.get(selectorList.modalCloseBtn).click();
+    cy.get('@modal').should('not.exist');
+
+    cy.get('@constructor').should('not.contain', 'Флюоресцентная булка R2-D3');
+    cy.get('@constructor').should(
+      'not.contain',
+      'Мясо бессмертных моллюсков Protostomia'
+    );
+    cy.get('@constructor').should(
+      'not.contain',
+      'Хрустящие минеральные кольца'
+    );
+    cy.get('@constructor').should('not.contain', 'Сыр с астероидной плесенью');
+    cy.get('@constructor').should('not.contain', 'Говяжий метеорит (отбивная)');
+    cy.get('@constructor').should('not.contain', 'Мини-салат Экзо-Плантаго');
+    cy.get('@constructor').should('not.contain', 'Сыр с астероидной плесенью');
+    cy.get('@constructor').should('not.contain', 'Соус фирменный Space Sauce');
   });
 
   after(() => {
