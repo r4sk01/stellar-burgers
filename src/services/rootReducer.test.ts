@@ -20,7 +20,7 @@ const expectedInitialState = {
   constructorbg: { ...constructorInitialState }
 };
 
-describe('rootReducer', () => {
+describe('Root Reducer', () => {
   test('[Test] When State Is Undefined and Action is Empty, returns Init State', () => {
     const state = rootReducer(undefined, { type: '@@INIT' });
 
