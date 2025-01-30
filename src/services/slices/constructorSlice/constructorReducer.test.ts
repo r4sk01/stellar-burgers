@@ -8,7 +8,7 @@ import constructorReducer, {
 } from './constructorSlice';
 import type { constructorState } from './types';
 import { nanoid } from '@reduxjs/toolkit';
-import { TConstructorIngredient, TIngredient } from '@utils-types';
+import { TIngredient } from '@utils-types';
 
 jest.mock('@reduxjs/toolkit', () => ({
   ...jest.requireActual('@reduxjs/toolkit'),
@@ -19,7 +19,6 @@ describe('Constructor Reducer', () => {
   let initialState: constructorState;
 
   beforeEach(() => {
-    // Clear All Mocks
     jest.clearAllMocks();
 
     // Define Initial State Before Each Test

@@ -5,12 +5,6 @@ import { orderInitialState } from './slices/orderSlice/orderSlice';
 import { ingredientsInitialState } from './slices/ingredientsSlice/ingredientsSlice';
 import { feedInitialState } from './slices/feedSlice/feedSlice';
 import { constructorInitialState } from './slices/constructorSlice/constructorSlice';
-import { constructorState } from './slices/constructorSlice/types';
-import { feedState } from './slices/feedSlice/types';
-import { ingredientsState } from './slices/ingredientsSlice/types';
-import { OrderState } from './slices/orderSlice/types';
-import { UserState } from './slices/userSlice/types';
-import { StateFromReducersMapObject } from '@reduxjs/toolkit';
 
 const expectedInitialState = {
   user: { ...userInitialState },
